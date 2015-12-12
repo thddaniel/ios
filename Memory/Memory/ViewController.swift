@@ -8,8 +8,8 @@
 
 import UIKit
 import AVFoundation
-import LocalAuthentication
-import Darwin
+import LocalAuthentication //touch id
+import Darwin //exit(0)
 
 class ViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -119,16 +119,36 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
     
     func TouchIDCall(){
         let authContext : LAContext = LAContext()
-    
         var error : NSError?
+        
         if authContext.canEvaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, error: &error){
             authContext.evaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, localizedReason: "Personal Information", reply: {
-                (wasSuccessful : Bool, error : NSError?) in
-                if wasSuccessful{
+                (success: Bool , policyerror : NSError? ) in
+                if success{
                     NSLog("success log in")
                 }else{
+                    
                     NSLog("failed log in")
-                    exit(0)
+                    
+                    NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                        self.showPasswordAlert()
+                    })
+
+                   /* switch policyerror!.code
+                    {
+                    case LAError.SystemCancel.rawValue:
+                        exit(0)
+                    case LAError.UserCancel.rawValue:
+                        exit(0)
+                    case LAError.UserFallback.rawValue:
+                        NSOperationQueue.mainQueue().addOperationWithBlock({() -> void in self.showPasswordAlert()
+                            
+                            })
+                    default:
+                        NSLog("failed log in")
+                    
+                    }*/
+                    
                 }
             })
         }else{
@@ -136,7 +156,34 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
         }
     }
     
-    
+    func showPasswordAlert()
+    {
+        let alertController = UIAlertController(title: "Touch ID Password", message: "Please enter your password.", preferredStyle: .Alert)
+        
+        let defaultAction = UIAlertAction(title: "OK", style: .Cancel) { (action) -> Void in
+            
+            if let textField = alertController.textFields?.first as UITextField?
+            {
+                if textField.text == "xuziqing"
+                {
+                    print("Authentication successful! :) ")
+                }
+                else
+                {
+                    self.showPasswordAlert()
+                }
+            }
+        }
+        alertController.addAction(defaultAction)
+        
+        alertController.addTextFieldWithConfigurationHandler { (textField) -> Void in
+            
+            textField.placeholder = "Password"
+            textField.secureTextEntry = true
+            
+        }
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
 
     
 }
