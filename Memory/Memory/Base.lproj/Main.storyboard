@@ -24,6 +24,16 @@
                                     <action selector="playMusic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HqE-LM-8UM"/>
                                 </connections>
                             </button>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="300" placeholderIntrinsicHeight="300" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="KKl-Te-z2G">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <gestureRecognizers/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="9" y="28" width="300" height="300"/>
+                                </variation>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="H2C-PF-bcF" appends="YES" id="mdW-Ls-NLd"/>
+                                </connections>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -33,6 +43,7 @@
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="glk-KO-Svb"/>
+                                <exclude reference="KKl-Te-z2G"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="unD-k7-bYn"/>
@@ -42,6 +53,7 @@
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="glk-KO-Svb"/>
+                                <include reference="KKl-Te-z2G"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="unD-k7-bYn"/>
@@ -50,12 +62,21 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="newImage" destination="KKl-Te-z2G" id="epj-gi-WPj"/>
                         <outlet property="playBotton" destination="glk-KO-Svb" id="bzR-Mg-1WZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="H2C-PF-bcF">
+                    <connections>
+                        <action selector="selectImageFromPhotoLibrary:" destination="BYZ-38-t0r" id="sCR-iC-VuJ"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="235.5" y="353"/>
+            <point key="canvasLocation" x="148.5" y="293"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="defaultPhoto" width="540" height="540"/>
+    </resources>
 </document>

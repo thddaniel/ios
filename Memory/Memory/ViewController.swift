@@ -9,14 +9,17 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var audioPlayer:AVAudioPlayer!
     @IBOutlet weak var playBotton: UIButton!
+    @IBOutlet weak var newImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        /*load mp3*/
         let filePathUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("tingge", ofType: "mp3")!)
         do{
              audioPlayer = try AVAudioPlayer(contentsOfURL:filePathUrl)
@@ -25,6 +28,7 @@ class ViewController: UIViewController {
             print("the filePath is empty")
         }
         
+        /*supporting background play*/
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             print("AVAudioSession Category Playback OK")
@@ -38,7 +42,11 @@ class ViewController: UIViewController {
             print(error.localizedDescription)
         }
         
-        
+        /*fit image*/
+        //newImage = UIImageView(frame: CGRectMake(0, 50, 320, 320))
+        //newImage.clipsToBounds = true
+        //newImage.contentMode = UIViewContentMode.ScaleAspectFit
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,7 +54,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    /* playButton play and stop music */
     @IBAction func playMusic(sender: UIButton) {
         playBotton.setTitle("stop", forState: UIControlState.Selected)
         playBotton.setTitle("play", forState: UIControlState.Normal)
@@ -64,5 +72,47 @@ class ViewController: UIViewController {
             
         }
     }
+    
+    
+    
+    @IBAction func selectImageFromPhotoLibrary(sender: UITapGestureRecognizer) {
+        // Hide the keyboard.
+        //nameTextField.resignFirstResponder()
+        
+        // UIImagePickerController is a view controller that lets a user pick media from their photo library.
+        print("selectImageFromPhotoLibrary in")
+        let imagePickerController = UIImagePickerController()
+        
+        // Only allow photos to be picked, not taken.
+        imagePickerController.sourceType = .PhotoLibrary
+        
+        // Make sure ViewController is notified when the user picks an image.
+        imagePickerController.delegate = self
+        
+        presentViewController(imagePickerController, animated: true, completion: nil)
+    }
+    
+    
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        // Dismiss the picker if the user canceled.
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        // The info dictionary contains multiple representations of the image, and this uses the original.
+        let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        
+        // Set photoImageView to display the selected image.
+        newImage.image = selectedImage
+        
+        // Dismiss the picker.
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    
+
+    
 }
 
