@@ -8,6 +8,8 @@
 
 import UIKit
 import AVFoundation
+import LocalAuthentication
+import Darwin
 
 class ViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -18,6 +20,10 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        
+        //call start touchID
+        TouchIDCall()
         
         /*load mp3*/
         let filePathUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("tingge", ofType: "mp3")!)
@@ -110,6 +116,25 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    
+    func TouchIDCall(){
+        let authContext : LAContext = LAContext()
+    
+        var error : NSError?
+        if authContext.canEvaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, error: &error){
+            authContext.evaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, localizedReason: "Personal Information", reply: {
+                (wasSuccessful : Bool, error : NSError?) in
+                if wasSuccessful{
+                    NSLog("success log in")
+                }else{
+                    NSLog("failed log in")
+                    exit(0)
+                }
+            })
+        }else{
+            //device without touch id
+        }
+    }
     
     
 
