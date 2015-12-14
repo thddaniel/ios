@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import LocalAuthentication //touch id
+
 import Darwin //exit(0)
 
 class ViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -18,12 +19,11 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
     @IBOutlet weak var newImage: UIImageView!
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+          self.TouchIDCall()
         
-        
-        //call start touchID
-        TouchIDCall()
         
         /*load mp3*/
         let filePathUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("tingge", ofType: "mp3")!)
@@ -116,7 +116,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    
     func TouchIDCall(){
         let authContext : LAContext = LAContext()
         var error : NSError?
@@ -133,19 +132,19 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
                     NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                         self.showPasswordAlert()
                     })
-
-                   /* switch policyerror!.code
+                    
+                    /* switch policyerror!.code
                     {
                     case LAError.SystemCancel.rawValue:
-                        exit(0)
+                    exit(0)
                     case LAError.UserCancel.rawValue:
-                        exit(0)
+                    exit(0)
                     case LAError.UserFallback.rawValue:
-                        NSOperationQueue.mainQueue().addOperationWithBlock({() -> void in self.showPasswordAlert()
-                            
-                            })
+                    NSOperationQueue.mainQueue().addOperationWithBlock({() -> void in self.showPasswordAlert()
+                    
+                    })
                     default:
-                        NSLog("failed log in")
+                    NSLog("failed log in")
                     
                     }*/
                     
@@ -183,7 +182,10 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
             
         }
         self.presentViewController(alertController, animated: true, completion: nil)
+        
     }
+
+
 
     
 }
