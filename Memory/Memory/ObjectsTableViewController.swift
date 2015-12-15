@@ -10,11 +10,14 @@ import UIKit
 import Parse
 import ParseUI
 import LocalAuthentication //touch id
+import AVFoundation
 
 class ObjectsTableViewController: PFQueryTableViewController
 {
     
     var hasIdentified = false
+    var audioPlayer:AVAudioPlayer!
+    @IBOutlet weak var playBotton: UIButton!
     
     //override func objectsDidLoad(error: NSError?) {    //this function will stuck
          //self.TouchIDCall()
@@ -27,9 +30,36 @@ class ObjectsTableViewController: PFQueryTableViewController
         query.cachePolicy = .NetworkElseCache //CacheThenNetwork,CacheElseNetwork
         query.orderByAscending("createdAt")
         
-        if hasIdentified == false{
-            self.TouchIDCall() //everytimes load PFtable, execute this..
+        if hasIdentified == false
+        {
             hasIdentified = true
+            
+            self.TouchIDCall()
+ 
+            /*load mp3*/
+            let filePathUrl = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("tingge", ofType: "mp3")!)
+            do{
+                audioPlayer = try AVAudioPlayer(contentsOfURL:filePathUrl)
+                audioPlayer.numberOfLoops = -1
+            }catch {
+                print("the filePath is empty")
+            }
+            
+            /*supporting background play*/
+            do {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+                print("AVAudioSession Category Playback OK")
+                do {
+                    try AVAudioSession.sharedInstance().setActive(true)
+                    print("AVAudioSession is Active")
+                } catch let error as NSError {
+                    print(error.localizedDescription)
+                }
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+            
+            
         }
         
         return query
@@ -153,6 +183,28 @@ class ObjectsTableViewController: PFQueryTableViewController
         self.presentViewController(alertController, animated: true, completion: nil)
         
     }
+    
+    
+    @IBAction func playMusic(sender: UIButton) {
+            playBotton.setTitle("stop", forState: UIControlState.Selected)
+            playBotton.setTitle("play", forState: UIControlState.Normal)
+            
+            sender.selected = !sender.selected
+            if sender.selected{
+                
+                audioPlayer.play()
+                print("play")
+                
+            }else{
+                print("stop")
+                audioPlayer.stop()
+                audioPlayer.currentTime = 0
+                
+            }
+        }
+        
 
+    
+    
     
 }

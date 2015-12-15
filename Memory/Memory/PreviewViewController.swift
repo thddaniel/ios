@@ -23,6 +23,8 @@ class PreviewViewController: UIViewController, UIScrollViewDelegate {
         imageFile.getDataInBackgroundWithBlock({ (imageData, error) -> Void in
             if error == nil
             {
+                
+                
                 if let imageData = imageData
                 {
                     let image = UIImage(data:imageData)

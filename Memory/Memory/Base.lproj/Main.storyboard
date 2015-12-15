@@ -67,7 +67,18 @@
                             <outlet property="delegate" destination="pu6-Ls-uE0" id="gqf-4p-QMl"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Memory" id="tbH-Ol-h0i"/>
+                    <navigationItem key="navigationItem" title="Memory" id="tbH-Ol-h0i">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="97E-tg-pgK">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="QFG-hL-cUI">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Music"/>
+                                <connections>
+                                    <action selector="playMusic:" destination="pu6-Ls-uE0" eventType="touchUpInside" id="rrf-jg-sBf"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="parseClassName" value="object"/>
                         <userDefinedRuntimeAttribute type="number" keyPath="objectsPerPage">
@@ -75,6 +86,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
+                        <outlet property="playBotton" destination="QFG-hL-cUI" id="wBc-4N-Jht"/>
                         <segue destination="Beb-mg-j2K" kind="show" identifier="showDetail" id="D4a-rD-FRj"/>
                     </connections>
                 </tableViewController>
