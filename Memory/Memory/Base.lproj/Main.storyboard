@@ -71,7 +71,7 @@
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="parseClassName" value="object"/>
                         <userDefinedRuntimeAttribute type="number" keyPath="objectsPerPage">
-                            <integer key="value" value="3"/>
+                            <integer key="value" value="5"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
@@ -80,7 +80,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7rn-ge-bga" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="928.5" y="-172"/>
+            <point key="canvasLocation" x="943.5" y="-184"/>
         </scene>
         <!--Preview View Controller-->
         <scene sceneID="aXk-Ae-aMg">
@@ -100,7 +100,7 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6zm-J2-ch0">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="8" y="49" width="305" height="374"/>
+                                            <rect key="frame" x="8" y="5" width="305" height="374"/>
                                         </variation>
                                     </imageView>
                                 </subviews>
@@ -110,7 +110,7 @@
                                     </mask>
                                 </variation>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="20" width="355" height="508"/>
+                                    <rect key="frame" x="0.0" y="64" width="355" height="464"/>
                                     <mask key="subviews">
                                         <include reference="6zm-J2-ch0"/>
                                     </mask>

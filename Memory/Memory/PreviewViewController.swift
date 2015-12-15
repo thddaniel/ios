@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 
+
 class PreviewViewController: UIViewController, UIScrollViewDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
