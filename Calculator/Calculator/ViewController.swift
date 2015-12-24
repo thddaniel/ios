@@ -14,7 +14,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var display: UILabel!
 
     var userTyping = false
-    var instoreNumberArray = Array<Double>()
+//    var instoreNumberArray = Array<Double>()
+    var brain = CalculatorBrain()
     
     
     @IBAction func numberButton(sender: UIButton) {
@@ -31,42 +32,55 @@ class ViewController: UIViewController {
     }
     
     @IBAction func operate(sender: UIButton) {
-        let symbol = sender.currentTitle!
+        
         if userTyping{
             enterButton()
         }
-        switch symbol {
-            case "+": performOperation{$0+$1}
-            case "−": performOperation{$1-$0}
-            case "×": performOperation{$0*$1}
-            case "÷": performOperation{$1/$0}
-            case "√": performOperation{sqrt($0)}
-            default: break
+        if let symbol = sender.currentTitle{
+//            switch symbol {
+//            case "+": performOperation{$0+$1}
+//            case "−": performOperation{$1-$0}
+//            case "×": performOperation{$0*$1}
+//            case "÷": performOperation{$1/$0}
+//            case "√": performOperation{sqrt($0)}
+//            default: break
+//            
+//           }
             
-       }
-    }
-    
-    func performOperation(operation: (Double,Double)->Double){
-        if instoreNumberArray.count >= 2 {
-            displayValue = operation(instoreNumberArray.removeLast(),instoreNumberArray.removeLast()) //set
-            enterButton()
+            if let result = brain.performOperation(symbol){
+                displayValue = result
+            }else{
+                displayValue = 0
+            }
         }
-        
     }
     
-    @nonobjc func performOperation(operation: Double->Double){
-        if instoreNumberArray.count >= 1 {
-            displayValue = operation(instoreNumberArray.removeLast()) //set
-            enterButton()
-        }
-        
-    }
-    
+//    func performOperation(operation: (Double,Double)->Double){
+//        if instoreNumberArray.count >= 2 {
+//            displayValue = operation(instoreNumberArray.removeLast(),instoreNumberArray.removeLast()) //set
+//            enterButton()
+//        }
+//        
+//    }
+//    
+//    @nonobjc func performOperation(operation: Double->Double){
+//        if instoreNumberArray.count >= 1 {
+//            displayValue = operation(instoreNumberArray.removeLast()) //set
+//            enterButton()
+//        }
+//        
+//    }
+
     
     @IBAction func enterButton() {
         userTyping = false
-        instoreNumberArray.append(displayValue) //get
-        print("instoreNumberArray: \(instoreNumberArray)")
+//        instoreNumberArray.append(displayValue) //get
+//        print("instoreNumberArray: \(instoreNumberArray)")
+        if let result = brain.pushOperand(displayValue){
+            displayValue = result
+        }else{
+            displayValue = 0
+        }
         
     }
     
